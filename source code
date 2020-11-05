@@ -1,21 +1,21 @@
-import tkinter as tk
-from tkinter import messagebox
-import pickle
+import tkinter as tk 
+from tkinter import messagebox # we cant get messagebox function in build-in tkinter functions so we need to add messagebox function btw.
+import pickle # we used for saving tasks and loading tasks to a data file than show it.
 
-form = tk.Tk()
-form.title("Todo List")
-form.geometry("500x500")
+form = tk.Tk() # Created window
+form.title("Todo List") 
+form.geometry("500x500") # x = 500, y= 500 (window size).
 
 
-def addtask():
+def addtask(): # we take texts from entry if we click "Add task" button. 
     task = entry1.get()
-    if task != "":
+    if task != "": # than if entry place is not empty add our text to last index.
         listbox.insert(tk.END, task)
-    else:
+    else: # if our entry havent text so it gives warning to the user.
         tk.messagebox.showwarning(title="Warning!", message="You must enter a task.")
-def deletetask():
+def deletetask(): # if we choose and click "Delete task" button, it will delete which one is choosen.
     listbox.delete(tk.ACTIVE)
-def loadtasks():
+def loadtasks():  #
     try:
         tasks = pickle.load(open("tasks.dat", "rb"))
         listbox.delete(0, tk.END)
@@ -23,27 +23,27 @@ def loadtasks():
             listbox.insert(tk.END, task)
     except:
         tk.messagebox.showwarning(title="Warning!", message="You must enter a tasks.dat.")
-def savetasks():
+def savetasks(): # we saved our added texts and we added in a tuple. Finally, we add called "tasks.dat" data file and wrote in binary form
     tasks = listbox.get(0, listbox.size())
     pickle.dump(tasks, open("tasks.dat", "wb"))
 
-listbox = tk.Listbox()
+listbox = tk.Listbox() # created Listbox
 listbox.place(x=150, y=100, width=200, height=300)
 
-scrollbar_tasks = tk.Scrollbar(form)
+scrollbar_tasks = tk.Scrollbar(form) # created scrollbar in y axis and for full page.
 scrollbar_tasks.pack(side=tk.RIGHT, fill=tk.Y)
 
 listbox.config(yscrollcommand=scrollbar_tasks.set)
-scrollbar_tasks.config(command=listbox.yview)
+scrollbar_tasks.config(command=listbox.yview) # we add functionality our scrollbar
 
-entry1 = tk.Entry(fg="blue", bg="grey")
+entry1 = tk.Entry(fg="blue", bg="grey") # entry for taking texts, numbers etc.
 entry1.place(x=0, y=0, width=200, height=20)
 
 label = tk.Label(text="Tasks", font="Times 17 bold")
-label.place(x=200, y=65)
+label.place(x=200, y=65) # that's for title of Listbox
 
 buton1 = tk.Button(form, text="Add task", bg="grey", font="Times 15 bold", command=addtask)
-buton1.place(x=150, y=420, width=200, height=20)
+buton1.place(x=150, y=420, width=200, height=20) 
 
 buton2 = tk.Button(form, text="Delete task", bg="grey", font="Times 15 bold", command=deletetask)
 buton2.place(x=150, y=440, width=200, height=20)
@@ -63,4 +63,5 @@ buton4.place(x=150, y=480, width=200, height=20)
 
 
 
-form.mainloop()
+form.mainloop() # keep open at all.
+
