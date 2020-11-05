@@ -1,0 +1,66 @@
+import tkinter as tk
+from tkinter import messagebox
+import pickle
+
+form = tk.Tk()
+form.title("Todo List")
+form.geometry("500x500")
+
+
+def addtask():
+    task = entry1.get()
+    if task != "":
+        listbox.insert(tk.END, task)
+    else:
+        tk.messagebox.showwarning(title="Warning!", message="You must enter a task.")
+def deletetask():
+    listbox.delete(tk.ACTIVE)
+def loadtasks():
+    try:
+        tasks = pickle.load(open("tasks.dat", "rb"))
+        listbox.delete(0, tk.END)
+        for task in tasks:
+            listbox.insert(tk.END, task)
+    except:
+        tk.messagebox.showwarning(title="Warning!", message="You must enter a tasks.dat.")
+def savetasks():
+    tasks = listbox.get(0, listbox.size())
+    pickle.dump(tasks, open("tasks.dat", "wb"))
+
+listbox = tk.Listbox()
+listbox.place(x=150, y=100, width=200, height=300)
+
+scrollbar_tasks = tk.Scrollbar(form)
+scrollbar_tasks.pack(side=tk.RIGHT, fill=tk.Y)
+
+listbox.config(yscrollcommand=scrollbar_tasks.set)
+scrollbar_tasks.config(command=listbox.yview)
+
+entry1 = tk.Entry(fg="blue", bg="grey")
+entry1.place(x=0, y=0, width=200, height=20)
+
+label = tk.Label(text="Tasks", font="Times 17 bold")
+label.place(x=200, y=65)
+
+buton1 = tk.Button(form, text="Add task", bg="grey", font="Times 15 bold", command=addtask)
+buton1.place(x=150, y=420, width=200, height=20)
+
+buton2 = tk.Button(form, text="Delete task", bg="grey", font="Times 15 bold", command=deletetask)
+buton2.place(x=150, y=440, width=200, height=20)
+
+buton3 = tk.Button(form, text="Load tasks", bg="grey", font="Times 15 bold", command=loadtasks)
+buton3.place(x=150, y=460, width=200, height=20)
+
+buton4 = tk.Button(form, text="Save tasks", bg="grey", font="Times 15 bold", command=savetasks)
+buton4.place(x=150, y=480, width=200, height=20)
+
+
+
+
+
+
+
+
+
+
+form.mainloop()
