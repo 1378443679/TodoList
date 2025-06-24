@@ -23,3 +23,6 @@ Load tasks (reads from tasks.dat)
 Tasks are stored in a file named tasks.dat using binary format via pickle.
 Make sure the file is in the same directory when loading tasks.
 On first use, if the file is not present, an error message will be shown.
+The Screenshoot of UI:
+![image](https://github.com/user-attachments/assets/d754e933-8a9b-4200-872a-e0b11121cdd3)
+
